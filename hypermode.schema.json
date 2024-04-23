@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://json.schemastore.org/hypermode.json",
+  "additionalProperties": true,
+  "properties": {
+    "hosts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "endpoint"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Internal name of your host. Used for indicating the host of a model or for a connection.",
+            "markdownDescription": "Internal name of your host. Used for indicating the host of a model or for a connection.\n\nReference: https://docs.hypermode.com/define-hosts"
+          },
+          "endpoint": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL and base path for connections to the host.",
+            "markdownDescription": "URL and base path for connections to the host.\n\nReference: https://docs.hypermode.com/define-hosts"
+          }
+        }
+      }
+    },
+    "models": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "task", "sourceModel", "provider", "host"],
+        "properties": {
+          "host": {
+            "type": "string",
+            "description": "Runtime provider of model. Can be dynamically deployed models on Hypermode or a project-defined host.",
+            "markdownDescription": "Runtime provider of model. Can be dynamically deployed models on Hypermode or a project-defined host.\n\nReference: https://docs.hypermode.com/define-models"
+          },
+          "name": {
+            "type": "string",
+            "description": "Internal name of your AI model. Used for indicating the model to use in an API call.",
+            "markdownDescription": "Internal name of your AI model. Used for indicating the model to use in an API call.\n\nReference: https://docs.hypermode.com/define-models"
+          },
+          "provider": {
+            "type": "string",
+            "description": "Source location of model, such as 'hugging-face' or 'openai'.",
+            "markdownDescription": "Source location of model, such as 'hugging-face' or 'openai'.\n\nReference: https://docs.hypermode.com/define-models"
+          },
+          "sourceModel": {
+            "type": "string",
+            "description": "Relative path of model within provider.",
+            "markdownDescription": "Relative path of model within provider.\n\nReference: https://docs.hypermode.com/define-models"
+          },
+          "task": {
+            "type": "string",
+            "description": "Training intent of model, such as 'classification' or 'embedding'.",
+            "markdownDescription": "Training intent of model, such as 'classification' or 'embedding'.\n\nReference: https://docs.hypermode.com/define-models"
+          }
+        }
+      }
+    }
+  },
+  "type": "object"
+}
