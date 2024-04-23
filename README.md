@@ -8,7 +8,6 @@ In your `hypermode.json`, add this line:
 
 ```json
 {
-  "$schema": "https://raw.githubusercontent.com/gohypermode/manifest/latest/hypermode.json",
-  ...
+  "$schema": "https://raw.githubusercontent.com/gohypermode/manifest/main/hypermode.schema.json"
 }
 ```
