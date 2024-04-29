@@ -20,6 +20,11 @@
             "format": "uri",
             "description": "URL and base path for connections to the host.",
             "markdownDescription": "URL and base path for connections to the host.\n\nReference: https://docs.hypermode.com/define-hosts"
+          },
+          "authHeader": {
+            "type": "string",
+            "description": "Authorization header name for connections to the host.",
+            "markdownDescription": "Authorization header name for connections to the host.\n\nReference: https://docs.hypermode.com/define-hosts"
           }
         }
       }
