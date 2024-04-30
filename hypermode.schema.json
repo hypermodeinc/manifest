@@ -4,11 +4,18 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri",
+      "description": "The schema that the document should conform to.",
+      "markdownDescription": "The schema that the document should conform to.\n\nReference: https://json-schema.org/"
+    },
     "hosts": {
       "type": "array",
       "items": {
         "type": "object",
         "required": ["name", "endpoint"],
+        "additionalProperties": false,
         "properties": {
           "name": {
             "type": "string",
@@ -34,6 +41,7 @@
       "items": {
         "type": "object",
         "required": ["name", "task", "sourceModel", "provider", "host"],
+        "additionalProperties": false,
         "properties": {
           "host": {
             "type": "string",
