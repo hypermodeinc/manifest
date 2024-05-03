@@ -19,17 +19,22 @@
         "properties": {
           "name": {
             "type": "string",
+            "minLength": 1,
+            "maxLength": 63,
+            "pattern": "^(?!-|.*-$|.*--)[a-zA-Z0-9-]+$",
             "description": "Internal name of your host. Used for indicating the host of a model or for a connection.",
             "markdownDescription": "Internal name of your host. Used for indicating the host of a model or for a connection.\n\nReference: https://docs.hypermode.com/define-hosts"
           },
           "endpoint": {
             "type": "string",
             "format": "uri",
+            "minLength": 1,
             "description": "URL and base path for connections to the host.",
             "markdownDescription": "URL and base path for connections to the host.\n\nReference: https://docs.hypermode.com/define-hosts"
           },
           "authHeader": {
             "type": "string",
+            "minLength": 1,
             "description": "Authorization header name for connections to the host.",
             "markdownDescription": "Authorization header name for connections to the host.\n\nReference: https://docs.hypermode.com/define-hosts"
           }
@@ -45,26 +50,35 @@
         "properties": {
           "host": {
             "type": "string",
+            "minLength": 1,
+            "maxLength": 63,
+            "pattern": "^(?!-|.*-$|.*--)[a-zA-Z0-9-]+$",
             "description": "Runtime provider of model. Can be dynamically deployed models on Hypermode or a project-defined host.",
             "markdownDescription": "Runtime provider of model. Can be dynamically deployed models on Hypermode or a project-defined host.\n\nReference: https://docs.hypermode.com/define-models"
           },
           "name": {
             "type": "string",
+            "minLength": 1,
+            "maxLength": 63,
+            "pattern": "^(?!-|.*-$|.*--)[a-zA-Z0-9-]+$",
             "description": "Internal name of your AI model. Used for indicating the model to use in an API call.",
             "markdownDescription": "Internal name of your AI model. Used for indicating the model to use in an API call.\n\nReference: https://docs.hypermode.com/define-models"
           },
           "provider": {
             "type": "string",
+            "minLength": 1,
             "description": "Source location of model, such as 'hugging-face' or 'openai'.",
             "markdownDescription": "Source location of model, such as 'hugging-face' or 'openai'.\n\nReference: https://docs.hypermode.com/define-models"
           },
           "sourceModel": {
             "type": "string",
+            "minLength": 1,
             "description": "Relative path of model within provider.",
             "markdownDescription": "Relative path of model within provider.\n\nReference: https://docs.hypermode.com/define-models"
           },
           "task": {
             "type": "string",
+            "minLength": 1,
             "description": "Training intent of model, such as 'classification' or 'embedding'.",
             "markdownDescription": "Training intent of model, such as 'classification' or 'embedding'.\n\nReference: https://docs.hypermode.com/define-models"
           }
