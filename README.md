@@ -10,6 +10,6 @@ In your `hypermode.json`, add this line to get autocomplete and error checking:
 
 ```json
 {
-  "$schema": "https://raw.githubusercontent.com/gohypermode/manifest/latest/hypermode.schema.json"
+  "$schema": "https://manifest.hypermode.com/hypermode.json"
 }
 ```
