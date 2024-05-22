@@ -8,6 +8,8 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
+
+	"github.com/tailscale/hujson"
 )
 
 type HypermodeManifest struct {
@@ -51,7 +53,26 @@ func (m Model) Hash() string {
 }
 
 func ReadManifest(content []byte) (HypermodeManifest, error) {
+
+	// We allow comments and trailing commas in the JSON files.
+	// This removes them, resulting in standard JSON.
+	bytes, err := standardizeJSON(content)
+	if err != nil {
+		return HypermodeManifest{}, err
+	}
+
+	// Now parse the JSON
 	manifest := HypermodeManifest{}
-	err := json.Unmarshal(content, &manifest)
+	err = json.Unmarshal(bytes, &manifest)
+
 	return manifest, err
+}
+
+func standardizeJSON(b []byte) ([]byte, error) {
+	ast, err := hujson.Parse(b)
+	if err != nil {
+		return b, err
+	}
+	ast.Standardize()
+	return ast.Pack(), nil
 }
