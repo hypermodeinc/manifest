@@ -5,12 +5,9 @@ import (
 	"encoding/hex"
 )
 
-type Manifest any
-
 type HypermodeManifest struct {
 	Models []Model `json:"models"`
 	Hosts  []Host  `json:"hosts"`
-	Manifest
 }
 
 type ModelTask string
