@@ -3,6 +3,7 @@ package reader
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 )
 
 type HypermodeManifest struct {
@@ -43,4 +44,9 @@ func (m Model) Hash() string {
 	hashStr := hex.EncodeToString(hash[:])
 
 	return hashStr
+}
+
+func ReadManifest(content []byte) (manifest HypermodeManifest, err error) {
+	err = json.Unmarshal(content, &manifest)
+	return
 }
