@@ -1,4 +1,4 @@
-module github.com/hypermodeAI/manifest/reader
+module github.com/hypermodeAI/manifest
 
 go 1.22
 
