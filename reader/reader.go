@@ -37,21 +37,6 @@ type Host struct {
 	AuthHeader string `json:"authHeader"`
 }
 
-type EmbeddingSpec struct {
-	EntityType string `json:"entityType"`
-	Attribute  string `json:"attribute"`
-	ModelName  string `json:"modelName"`
-	Config     struct {
-		Query    string `json:"query"`
-		Template string `json:"template"`
-	} `json:"config"`
-}
-
-type TrainingInstruction struct {
-	ModelName string   `json:"modelName"`
-	Labels    []string `json:"labels"`
-}
-
 func (m Model) Hash() string {
 	// Concatenate the attributes into a single string
 	data := m.Name + "|" + string(m.Task) + "|" + m.SourceModel + "|" + m.Provider
