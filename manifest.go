@@ -2,7 +2,7 @@
  * Copyright 2024 Hypermode, Inc.
  */
 
-package reader
+package manifest
 
 import (
 	"crypto/sha256"
@@ -13,8 +13,8 @@ import (
 )
 
 type HypermodeManifest struct {
-	Models []Model `json:"models"`
-	Hosts  []Host  `json:"hosts"`
+	Models []ModelInfo `json:"models"`
+	Hosts  []HostInfo  `json:"hosts"`
 }
 
 type ModelTask string
@@ -25,7 +25,7 @@ const (
 	GenerationTask     ModelTask = "generation"
 )
 
-type Model struct {
+type ModelInfo struct {
 	Name        string    `json:"name"`
 	Task        ModelTask `json:"task"`
 	SourceModel string    `json:"sourceModel"`
@@ -33,13 +33,13 @@ type Model struct {
 	Host        string    `json:"host"`
 }
 
-type Host struct {
+type HostInfo struct {
 	Name       string `json:"name"`
 	Endpoint   string `json:"endpoint"`
 	AuthHeader string `json:"authHeader"`
 }
 
-func (m Model) Hash() string {
+func (m ModelInfo) Hash() string {
 	// Concatenate the attributes into a single string
 	data := m.Name + "|" + string(m.Task) + "|" + m.SourceModel + "|" + m.Provider + "|" + m.Host
 
