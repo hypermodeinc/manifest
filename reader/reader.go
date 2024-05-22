@@ -8,10 +8,8 @@ import (
 type Manifest any
 
 type HypermodeManifest struct {
-	Models               []Model               `json:"models"`
-	Hosts                []Host                `json:"hosts"`
-	EmbeddingSpecs       []EmbeddingSpec       `json:"embeddingSpecs"`
-	TrainingInstructions []TrainingInstruction `json:"trainingInstructions"`
+	Models []Model `json:"models"`
+	Hosts  []Host  `json:"hosts"`
 	Manifest
 }
 
