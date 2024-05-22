@@ -1,3 +1,3 @@
-module github.com/gohypermode/manifest/reader
+module github.com/hypermodeAI/manifest/reader
 
 go 1.22
