@@ -50,7 +50,8 @@ func (m Model) Hash() string {
 	return hashStr
 }
 
-func ReadManifest(content []byte) (manifest HypermodeManifest, err error) {
-	err = json.Unmarshal(content, &manifest)
-	return
+func ReadManifest(content []byte) (HypermodeManifest, error) {
+	manifest := HypermodeManifest{}
+	err := json.Unmarshal(content, &manifest)
+	return manifest, err
 }
