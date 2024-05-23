@@ -6,11 +6,17 @@ package manifest
 
 import (
 	"crypto/sha256"
+	_ "embed"
 	"encoding/hex"
 	"encoding/json"
+	"fmt"
 
+	"github.com/santhosh-tekuri/jsonschema/v5"
 	"github.com/tailscale/hujson"
 )
+
+//go:embed hypermode.json
+var schemaContent string
 
 type HypermodeManifest struct {
 	Models map[string]ModelInfo `json:"models"`
@@ -86,4 +92,29 @@ func standardizeJSON(b []byte) ([]byte, error) {
 	}
 	ast.Standardize()
 	return ast.Pack(), nil
+}
+
+func ValidateManifest(content []byte) error {
+	sch, err := jsonschema.CompileString("hypermode.json", schemaContent)
+	if err != nil {
+		return err
+	}
+
+	content, err = standardizeJSON(content)
+	if err != nil {
+		return fmt.Errorf("failed to standardize manifest: %w", err)
+	}
+
+	var v interface{}
+	err = json.Unmarshal(content, &v)
+	if err != nil {
+		return fmt.Errorf("failed to deserialize manifest: %w", err)
+	}
+
+	err = sch.Validate(v)
+	if err != nil {
+		return fmt.Errorf("failed to validate manifest: %w", err)
+	}
+
+	return nil
 }
