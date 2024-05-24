@@ -59,6 +59,13 @@ func TestReadManifest(t *testing.T) {
 					"api_token": "{{API_TOKEN}}",
 				},
 			},
+			"another-rest-api": {
+				Name:    "another-rest-api",
+				BaseURL: "https://api.example.com/v2/",
+				Headers: map[string]string{
+					"Authorization": "Basic {{base64:(USERNAME:PASSWORD)}}",
+				},
+			},
 		},
 	}
 
@@ -93,5 +100,27 @@ func TestModelInfo_Hash(t *testing.T) {
 	actualHash := model.Hash()
 	if actualHash != expectedHash {
 		t.Errorf("Expected hash: %s, but got: %s", expectedHash, actualHash)
+	}
+}
+
+func TestGetHostVariablesFromManifest(t *testing.T) {
+
+	// This should match the host variables that are present in valid_hypermode.json
+	expectedVars := map[string][]string{
+		"my-model-host":    {"API_KEY"},
+		"my-graphql-api":   {"AUTH_TOKEN"},
+		"my-rest-api":      {"API_TOKEN"},
+		"another-rest-api": {"USERNAME", "PASSWORD"},
+	}
+
+	m, err := manifest.ReadManifest(validManifest)
+	if err != nil {
+		t.Errorf("Error reading manifest: %v", err)
+	}
+
+	vars := m.GetHostVariables()
+
+	if !reflect.DeepEqual(vars, expectedVars) {
+		t.Errorf("Expected vars: %+v, but got: %+v", expectedVars, vars)
 	}
 }
