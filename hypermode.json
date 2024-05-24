@@ -176,7 +176,7 @@
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 63,
-                "pattern": "^(?!-|.*-$|.*--)[a-zA-Z0-9-]+$",
+                "pattern": "^[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*$",
                 "description": "Internal name of your host. Used for indicating the host of a model or for a connection.",
                 "markdownDescription": "Internal name of your host. Used for indicating the host of a model or for a connection.\n\nReference: https://docs.hypermode.com/define-hosts"
               },
@@ -213,7 +213,7 @@
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 63,
-                "pattern": "^(?!-|.*-$|.*--)[a-zA-Z0-9-]+$",
+                "pattern": "^[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*$",
                 "description": "Runtime provider of model. Can be dynamically deployed models on Hypermode or a project-defined host.",
                 "markdownDescription": "Runtime provider of model. Can be dynamically deployed models on Hypermode or a project-defined host.\n\nReference: https://docs.hypermode.com/define-models"
               },
@@ -221,7 +221,7 @@
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 63,
-                "pattern": "^(?!-|.*-$|.*--)[a-zA-Z0-9-]+$",
+                "pattern": "^[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*$",
                 "description": "Internal name of your AI model. Used for indicating the model to use in an API call.",
                 "markdownDescription": "Internal name of your AI model. Used for indicating the model to use in an API call.\n\nReference: https://docs.hypermode.com/define-models"
               },
