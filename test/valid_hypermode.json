@@ -39,6 +39,12 @@
       "queryParameters": {
         "api_token": "{{API_TOKEN}}"
       }
+    },
+    "another-rest-api": {
+      "baseUrl": "https://api.example.com/v2/",
+      "headers": {
+        "Authorization": "Basic {{base64:(USERNAME:PASSWORD)}}"
+      }
     }
   }
 }

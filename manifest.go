@@ -10,6 +10,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"regexp"
 
 	"github.com/santhosh-tekuri/jsonschema/v5"
 	"github.com/tailscale/hujson"
@@ -117,4 +118,65 @@ func ValidateManifest(content []byte) error {
 	}
 
 	return nil
+}
+
+func (m *HypermodeManifest) GetHostVariables() map[string][]string {
+	results := make(map[string][]string, len(m.Hosts))
+
+	for _, host := range m.Hosts {
+		vars := host.GetVariables()
+		if len(vars) > 0 {
+			results[host.Name] = vars
+		}
+	}
+
+	return results
+}
+
+func (h *HostInfo) GetVariables() []string {
+	cap := 2 * (len(h.Headers) + len(h.QueryParameters))
+	set := make(map[string]bool, cap)
+	results := make([]string, 0, cap)
+
+	for _, header := range h.Headers {
+		vars := extractVariables(header)
+		for _, v := range vars {
+			if _, ok := set[v]; !ok {
+				set[v] = true
+				results = append(results, v)
+			}
+		}
+	}
+
+	for _, v := range h.QueryParameters {
+		vars := extractVariables(v)
+		for _, v := range vars {
+			if _, ok := set[v]; !ok {
+				set[v] = true
+				results = append(results, v)
+			}
+		}
+	}
+
+	return results
+}
+
+var templateRegex = regexp.MustCompile(`{{\s*(?:base64:\((.+?):(.+?)\)|(.+?))\s*}}`)
+
+func extractVariables(s string) []string {
+	matches := templateRegex.FindAllStringSubmatch(s, -1)
+	if matches == nil {
+		return []string{}
+	}
+
+	results := make([]string, 0, len(matches)*2)
+	for _, match := range matches {
+		for j := 1; j < len(match); j++ {
+			if match[j] != "" {
+				results = append(results, match[j])
+			}
+		}
+	}
+
+	return results
 }
