@@ -134,25 +134,28 @@ func (m *HypermodeManifest) GetHostVariables() map[string][]string {
 }
 
 func (h *HostInfo) GetVariables() []string {
-	set := make(map[string]bool)
+	cap := 2 * (len(h.Headers) + len(h.QueryParameters))
+	set := make(map[string]bool, cap)
+	results := make([]string, 0, cap)
 
 	for _, header := range h.Headers {
 		vars := extractVariables(header)
 		for _, v := range vars {
-			set[v] = true
+			if _, ok := set[v]; !ok {
+				set[v] = true
+				results = append(results, v)
+			}
 		}
 	}
 
 	for _, v := range h.QueryParameters {
 		vars := extractVariables(v)
 		for _, v := range vars {
-			set[v] = true
+			if _, ok := set[v]; !ok {
+				set[v] = true
+				results = append(results, v)
+			}
 		}
-	}
-
-	results := make([]string, 0, len(set))
-	for v := range set {
-		results = append(results, v)
 	}
 
 	return results
