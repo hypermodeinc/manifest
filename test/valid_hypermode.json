@@ -1,6 +1,6 @@
 {
   // Test valid Hypermode manifest file
-  "$schema": "file:///Users/matt/Code/gohypermode/manifest/hypermode.json",
+  "$schema": "https://manifest.hypermode.com/hypermode.json",
   "models": {
     "model-1": {
       "task": "classification",
