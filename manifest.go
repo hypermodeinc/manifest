@@ -12,16 +12,31 @@ import (
 	"fmt"
 	"regexp"
 
+	v1_manifest "github.com/hypermodeAI/manifest/compat/v1"
+
 	"github.com/santhosh-tekuri/jsonschema/v5"
 	"github.com/tailscale/hujson"
 )
+
+// This version should only be incremented if there are major breaking changes
+// to the manifest schema.  In general, we don't consider the schema to be versioned,
+// from the user's perspective, so this should be rare.
+const currentVersion = 2
+
+// for backward compatibility
+const V1AuthHeaderVariableName = "__V1_AUTH_HEADER_VALUE__"
 
 //go:embed hypermode.json
 var schemaContent string
 
 type HypermodeManifest struct {
-	Models map[string]ModelInfo `json:"models"`
-	Hosts  map[string]HostInfo  `json:"hosts"`
+	Version int                  `json:"-"`
+	Models  map[string]ModelInfo `json:"models"`
+	Hosts   map[string]HostInfo  `json:"hosts"`
+}
+
+func (m *HypermodeManifest) IsCurrentVersion() bool {
+	return m.Version == currentVersion
 }
 
 type ModelTask string
@@ -62,15 +77,36 @@ func (m ModelInfo) Hash() string {
 }
 
 func ReadManifest(content []byte) (HypermodeManifest, error) {
-
+	// Create standard JSON before attempting to parse
+	var manifest HypermodeManifest
 	data, err := standardizeJSON(content)
 	if err != nil {
-		return HypermodeManifest{}, err
+		return manifest, err
 	}
 
-	// Parse the JSON
-	manifest := HypermodeManifest{}
-	err = json.Unmarshal(data, &manifest)
+	// Try to parse using the current format first
+	err = parseManifestJson(data, &manifest)
+	if err == nil {
+		return manifest, nil
+	}
+
+	// Try the older format if that failed
+	err = parseManifestJsonV1(data, &manifest)
+	if err == nil {
+		return manifest, nil
+	}
+
+	return manifest, fmt.Errorf("failed to parse manifest: %w", err)
+
+}
+
+func parseManifestJson(data []byte, manifest *HypermodeManifest) error {
+	err := json.Unmarshal(data, &manifest)
+	if err != nil {
+		return fmt.Errorf("failed to parse manifest: %w", err)
+	}
+
+	manifest.Version = currentVersion
 
 	// Copy map keys to Name fields
 	for key, model := range manifest.Models {
@@ -82,7 +118,52 @@ func ReadManifest(content []byte) (HypermodeManifest, error) {
 		manifest.Hosts[key] = host
 	}
 
-	return manifest, err
+	return nil
+}
+
+func parseManifestJsonV1(data []byte, manifest *HypermodeManifest) error {
+	// Parse the v1 manifest
+	var v1_man v1_manifest.HypermodeManifest
+	err := json.Unmarshal(data, &v1_man)
+	if err != nil {
+		return err
+	}
+
+	manifest.Version = 1
+
+	// Copy the v1 models to the current structure.
+	manifest.Models = make(map[string]ModelInfo, len(v1_man.Models))
+	for _, model := range v1_man.Models {
+		manifest.Models[model.Name] = ModelInfo{
+			Name:        model.Name,
+			Task:        ModelTask(string(model.Task)),
+			SourceModel: model.SourceModel,
+			Provider:    model.Provider,
+			Host:        model.Host,
+		}
+	}
+
+	// Copy the v1 hosts to the current structure.
+	manifest.Hosts = make(map[string]HostInfo, len(v1_man.Hosts))
+	for _, host := range v1_man.Hosts {
+		h := HostInfo{
+			Name: host.Name,
+			// In v1 the endpoint was used for both endpoint and baseURL purposes.
+			// We'll retain that behavior here so the usage doesn't need to change in the Runtime.
+			Endpoint: host.Endpoint,
+			BaseURL:  host.Endpoint,
+		}
+		if host.AuthHeader != "" {
+			h.Headers = map[string]string{
+				// Use a special variable name for the old auth header value.
+				// The runtime will replace this with the old auth header secret value if it exists.
+				host.AuthHeader: "{{" + V1AuthHeaderVariableName + "}}",
+			}
+		}
+		manifest.Hosts[host.Name] = h
+	}
+
+	return nil
 }
 
 // standardizeJSON removes comments and trailing commas to make the JSON valid
