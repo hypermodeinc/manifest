@@ -34,6 +34,7 @@ const (
 
 type ModelInfo struct {
 	Name        string    `json:"-"`
+	ID          string 		`json:"id"` // inject model instances' ids for inference history
 	Task        ModelTask `json:"task"`
 	SourceModel string    `json:"sourceModel"`
 	Provider    string    `json:"provider"`
