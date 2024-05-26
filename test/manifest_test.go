@@ -67,7 +67,7 @@ func TestReadManifest(t *testing.T) {
 				Name:    "another-rest-api",
 				BaseURL: "https://api.example.com/v2/",
 				Headers: map[string]string{
-					"Authorization": "Basic {{base64:(USERNAME:PASSWORD)}}",
+					"Authorization": "Basic {{base64(USERNAME:PASSWORD)}}",
 				},
 			},
 		},
