@@ -242,7 +242,7 @@ func (h *HostInfo) GetVariables() []string {
 	return results
 }
 
-var templateRegex = regexp.MustCompile(`{{\s*(?:base64:\((.+?):(.+?)\)|(.+?))\s*}}`)
+var templateRegex = regexp.MustCompile(`{{\s*(?:base64\((.+?):(.+?)\)|(.+?))\s*}}`)
 
 func extractVariables(s string) []string {
 	matches := templateRegex.FindAllStringSubmatch(s, -1)

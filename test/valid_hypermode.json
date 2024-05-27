@@ -43,7 +43,7 @@
     "another-rest-api": {
       "baseUrl": "https://api.example.com/v2/",
       "headers": {
-        "Authorization": "Basic {{base64:(USERNAME:PASSWORD)}}"
+        "Authorization": "Basic {{base64(USERNAME:PASSWORD)}}"
       }
     }
   }
