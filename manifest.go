@@ -21,6 +21,7 @@ import (
 // This version should only be incremented if there are major breaking changes
 // to the manifest schema.  In general, we don't consider the schema to be versioned,
 // from the user's perspective, so this should be rare.
+// NOTE: We intentionally do not expose the *current* version number outside this package.
 const currentVersion = 2
 
 // for backward compatibility
@@ -37,6 +38,10 @@ type HypermodeManifest struct {
 
 func (m *HypermodeManifest) IsCurrentVersion() bool {
 	return m.Version == currentVersion
+}
+
+func IsCurrentVersion(version int) bool {
+	return version == currentVersion
 }
 
 type ModelTask string
