@@ -81,6 +81,19 @@ func (m ModelInfo) Hash() string {
 	return hashStr
 }
 
+func (h HostInfo) Hash() string {
+	// Concatenate the attributes into a single string
+	data := h.Name + "|" + h.Endpoint + "|" + h.BaseURL + "|" + fmt.Sprintf("%v", h.Headers) + "|" + fmt.Sprintf("%v", h.QueryParameters)
+
+	// Compute the SHA-256 hash
+	hash := sha256.Sum256([]byte(data))
+
+	// Convert the hash to a hexadecimal string
+	hashStr := hex.EncodeToString(hash[:])
+
+	return hashStr
+}
+
 func ReadManifest(content []byte) (HypermodeManifest, error) {
 	// Create standard JSON before attempting to parse
 	var manifest HypermodeManifest
