@@ -166,6 +166,27 @@ func TestModelInfo_Hash(t *testing.T) {
 	}
 }
 
+func TestHostInfo_Hash(t *testing.T) {
+	host := manifest.HostInfo{
+		Name:     "my-host",
+		Endpoint: "https://example.com/api",
+		BaseURL:  "https://example.com/api",
+		Headers: map[string]string{
+			"Authorization": "Bearer {{API_TOKEN}}",
+		},
+		QueryParameters: map[string]string{
+			"api_token": "{{API_TOKEN}}",
+		},
+	}
+
+	expectedHash := "897ba7738c819211a9291f402bbdda529aadd4f83107ee08157e72bc12e915ec"
+
+	actualHash := host.Hash()
+	if actualHash != expectedHash {
+		t.Errorf("Expected hash: %s, but got: %s", expectedHash, actualHash)
+	}
+}
+
 func TestGetHostVariablesFromManifest(t *testing.T) {
 
 	// This should match the host variables that are present in valid_hypermode.json
