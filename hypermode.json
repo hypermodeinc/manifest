@@ -103,6 +103,12 @@
           "additionalProperties": {
             "type": "object",
             "properties": {
+              "type": {
+                "type": "string",
+                "pattern": "http",
+                "description": "Type for the host, such as 'http'",
+                "markdownDescription": "Type for the host, such as 'http'.\n\nReference: https://docs.hypermode.com/define-hosts"
+              },
               "baseUrl": {
                 "type": "string",
                 "format": "uri",

@@ -47,6 +47,10 @@
       "headers": {
         "Authorization": "Basic {{base64(USERNAME:PASSWORD)}}"
       }
+    },
+    "api-with-type": {
+      "type": "http",
+      "baseUrl": "https://api.example.com/v2/"
     }
   },
   "collections": {

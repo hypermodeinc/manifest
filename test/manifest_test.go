@@ -38,40 +38,50 @@ func TestReadManifest(t *testing.T) {
 			},
 		},
 		Hosts: map[string]manifest.HostInfo{
-			"my-model-host": {
+			"my-model-host": manifest.HTTPHostInfo{
 				Name:    "my-model-host",
+				Type:    manifest.HostTypeHTTP,
 				BaseURL: "https://models.example.com/",
 				Headers: map[string]string{
 					"X-API-Key": "{{API_KEY}}",
 				},
 			},
-			"another-model-host": {
+			"another-model-host": manifest.HTTPHostInfo{
 				Name:     "another-model-host",
+				Type:     manifest.HostTypeHTTP,
 				Endpoint: "https://models.example.com/full/path/to/model-3",
 				Headers: map[string]string{
 					"X-API-Key": "{{API_KEY}}",
 				},
 			},
-			"my-graphql-api": {
+			"my-graphql-api": manifest.HTTPHostInfo{
 				Name:     "my-graphql-api",
+				Type:     manifest.HostTypeHTTP,
 				Endpoint: "https://api.example.com/graphql",
 				Headers: map[string]string{
 					"Authorization": "Bearer {{AUTH_TOKEN}}",
 				},
 			},
-			"my-rest-api": {
+			"my-rest-api": manifest.HTTPHostInfo{
 				Name:    "my-rest-api",
+				Type:    manifest.HostTypeHTTP,
 				BaseURL: "https://api.example.com/v1/",
 				QueryParameters: map[string]string{
 					"api_token": "{{API_TOKEN}}",
 				},
 			},
-			"another-rest-api": {
+			"another-rest-api": manifest.HTTPHostInfo{
 				Name:    "another-rest-api",
+				Type:    manifest.HostTypeHTTP,
 				BaseURL: "https://api.example.com/v2/",
 				Headers: map[string]string{
 					"Authorization": "Basic {{base64(USERNAME:PASSWORD)}}",
 				},
+			},
+			"api-with-type": manifest.HTTPHostInfo{
+				Name:    "api-with-type",
+				Type:    manifest.HostTypeHTTP,
+				BaseURL: "https://api.example.com/v2/",
 			},
 		},
 		Collections: map[string]manifest.CollectionInfo{
@@ -131,7 +141,7 @@ func TestReadV1Manifest(t *testing.T) {
 			},
 		},
 		Hosts: map[string]manifest.HostInfo{
-			"my-model-host": {
+			"my-model-host": manifest.HTTPHostInfo{
 				Name:     "my-model-host",
 				Endpoint: "https://models.example.com/full/path/to/model-1",
 				BaseURL:  "https://models.example.com/full/path/to/model-1",
@@ -139,7 +149,7 @@ func TestReadV1Manifest(t *testing.T) {
 					"X-API-Key": "{{" + manifest.V1AuthHeaderVariableName + "}}",
 				},
 			},
-			"my-graphql-api": {
+			"my-graphql-api": manifest.HTTPHostInfo{
 				Name:     "my-graphql-api",
 				Endpoint: "https://api.example.com/graphql",
 				BaseURL:  "https://api.example.com/graphql",
@@ -162,8 +172,7 @@ func TestReadV1Manifest(t *testing.T) {
 }
 
 func TestValidateManifest(t *testing.T) {
-	err := manifest.ValidateManifest(validManifest)
-	if err != nil {
+	if err := manifest.ValidateManifest(validManifest); err != nil {
 		t.Error(err)
 	}
 }
@@ -185,7 +194,7 @@ func TestModelInfo_Hash(t *testing.T) {
 }
 
 func TestHostInfo_Hash(t *testing.T) {
-	host := manifest.HostInfo{
+	host := manifest.HTTPHostInfo{
 		Name:     "my-host",
 		Endpoint: "https://example.com/api",
 		BaseURL:  "https://example.com/api",
@@ -206,7 +215,6 @@ func TestHostInfo_Hash(t *testing.T) {
 }
 
 func TestGetHostVariablesFromManifest(t *testing.T) {
-
 	// This should match the host variables that are present in valid_hypermode.json
 	expectedVars := map[string][]string{
 		"my-model-host":      {"API_KEY"},
@@ -222,7 +230,6 @@ func TestGetHostVariablesFromManifest(t *testing.T) {
 	}
 
 	vars := m.GetHostVariables()
-
 	if !reflect.DeepEqual(vars, expectedVars) {
 		t.Errorf("Expected vars: %+v, but got: %+v", expectedVars, vars)
 	}
