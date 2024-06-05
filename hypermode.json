@@ -23,8 +23,6 @@
           },
           "additionalProperties": {
             "type": "object",
-            "minLength": 1,
-            "maxLength": 2,
             "required": [
               "task",
               "sourceModel",
