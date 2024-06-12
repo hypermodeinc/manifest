@@ -146,6 +146,84 @@
             ],
             "additionalProperties": false
           }
+        },
+        "collections": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 63,
+            "pattern": "^[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "searchMethods": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 63,
+                  "pattern": "^[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*$"
+                },
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "embeddingFunction": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Name of the embedding function to call in the collection.",
+                      "markdownDescription": "Name of the embedding function to call in the collection.\n\nReference: https://docs.hypermode.com/define-collections"
+                    },
+                    "index": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": ["sequential"],
+                              "description": "Type of the index.",
+                              "markdownDescription": "Type of the index.\n\nReference: https://docs.hypermode.com/define-collections"
+                            },
+                            "options": {
+                              "type": "object"
+                            }
+                          },
+                          "required": ["type"]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": ["hnsw"],
+                              "description": "Type of the index.",
+                              "markdownDescription": "Type of the index.\n\nReference: https://docs.hypermode.com/define-collections"
+                            },
+                            "options": {
+                              "type": "object",
+                              "properties": {
+                                "efConstruction": {
+                                  "type": "integer"
+                                },
+                                "maxLevels": {
+                                  "type": "integer"
+                                }
+                              },
+                              "required": ["efConstruction", "maxLevels"]
+                            }
+                          },
+                          "required": ["type", "options"]
+                        }
+                      ]
+                    }
+                  },
+                  "required": ["embeddingFunction"]
+                }
+              }
+            }
+          }
         }
       }
     },

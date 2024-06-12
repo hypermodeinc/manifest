@@ -71,6 +71,25 @@ func TestReadManifest(t *testing.T) {
 				},
 			},
 		},
+		Collections: map[string]manifest.CollectionInfo{
+			"collection1": {
+				SearchMethods: map[string]manifest.SearchMethodInfo{
+					"searchMethod1": {
+						EmbeddingFunction: "searchFunction1",
+					},
+					"searchMethod2": {
+						EmbeddingFunction: "searchFunction1",
+						Index: manifest.IndexInfo{
+							Type: "hnsw",
+							Options: manifest.OptionsInfo{
+								EfConstruction: 100,
+								MaxLevels:      3,
+							},
+						},
+					},
+				},
+			},
+		},
 	}
 
 	actualManifest, err := manifest.ReadManifest(validManifest)

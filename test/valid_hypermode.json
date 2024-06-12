@@ -1,50 +1,69 @@
 {
-  // Test valid Hypermode manifest file
-  "$schema": "https://manifest.hypermode.com/hypermode.json",
-  "models": {
-    "model-1": {
-      "task": "classification",
-      "sourceModel": "source-model-1",
-      "provider": "provider-1",
-      "host": "my-model-host"
-    },
-    "model-2": {
-      "task": "embedding",
-      "sourceModel": "source-model-2",
-      "provider": "provider-2",
-      "host": "hypermode"
-    },
-    "model-3": {
-      "task": "generation",
-      "sourceModel": "source-model-3",
-      "provider": "provider-3",
-      "host": "hypermode"
-    }
-  },
-  "hosts": {
-    "my-model-host": {
-      "endpoint": "https://models.example.com/full/path/to/model-1",
-      "headers": {
-        "X-API-Key": "{{API_KEY}}"
-      }
-    },
-    "my-graphql-api": {
-      "endpoint":"https://api.example.com/graphql",
-      "headers": {
-        "Authorization": "Bearer {{AUTH_TOKEN}}"
-      }
-    },
-    "my-rest-api": {
-      "baseUrl": "https://api.example.com/v1/",
-      "queryParameters": {
-        "api_token": "{{API_TOKEN}}"
-      }
-    },
-    "another-rest-api": {
-      "baseUrl": "https://api.example.com/v2/",
-      "headers": {
-        "Authorization": "Basic {{base64(USERNAME:PASSWORD)}}"
-      }
-    }
-  }
+    // Test valid Hypermode manifest file
+	"$schema": "https://manifest.hypermode.com/hypermode.json",
+	"models": {
+		"model-1": {
+			"task": "classification",
+			"sourceModel": "source-model-1",
+			"provider": "provider-1",
+			"host": "my-model-host"
+		},
+		"model-2": {
+			"task": "embedding",
+			"sourceModel": "source-model-2",
+			"provider": "provider-2",
+			"host": "hypermode"
+		},
+		"model-3": {
+			"task": "generation",
+			"sourceModel": "source-model-3",
+			"provider": "provider-3",
+			"host": "hypermode"
+		}
+	},
+	"hosts": {
+		"my-model-host": {
+			"endpoint": "https://models.example.com/full/path/to/model-1",
+			"headers": {
+				"X-API-Key": "{{API_KEY}}"
+			}
+		},
+		"my-graphql-api": {
+			"endpoint": "https://api.example.com/graphql",
+			"headers": {
+				"Authorization": "Bearer {{AUTH_TOKEN}}"
+			}
+		},
+		"my-rest-api": {
+			"baseUrl": "https://api.example.com/v1/",
+			"queryParameters": {
+				"api_token": "{{API_TOKEN}}"
+			}
+		},
+		"another-rest-api": {
+			"baseUrl": "https://api.example.com/v2/",
+			"headers": {
+				"Authorization": "Basic {{base64(USERNAME:PASSWORD)}}"
+			}
+		}
+	},
+	"collections": {
+		"collection1": {
+			"searchMethods": {
+				"searchMethod1": {
+					"embeddingFunction": "searchFunction1"
+				},
+				"searchMethod2": {
+					"embeddingFunction": "searchFunction1",
+					"index": {
+						"type": "hnsw",
+						"options": {
+							"efConstruction": 100,
+							"maxLevels": 3
+						}
+					}
+				}
+			}
+		}
+	}
 }
