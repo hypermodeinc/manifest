@@ -74,8 +74,8 @@ type CollectionInfo struct {
 }
 
 type SearchMethodInfo struct {
-	EmbeddingFunction string    `json:"embeddingFunction"`
-	Index             IndexInfo `json:"index"`
+	Embedder string    `json:"embedder"`
+	Index    IndexInfo `json:"index"`
 }
 
 type IndexInfo struct {

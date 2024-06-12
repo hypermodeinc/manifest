@@ -175,7 +175,7 @@
                   "description": "Search method configuration for the collection.  If an index configuration is not specified, a default sequential index will be created automatically.",
                   "additionalProperties": false,
                   "properties": {
-                    "embeddingFunction": {
+                    "embedder": {
                       "type": "string",
                       "minLength": 1,
                       "description": "Name of the embedding function to call in the collection."
@@ -230,7 +230,7 @@
                       ]
                     }
                   },
-                  "required": ["embeddingFunction"]
+                  "required": ["embedder"]
                 }
               }
             }

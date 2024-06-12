@@ -75,10 +75,10 @@ func TestReadManifest(t *testing.T) {
 			"collection1": {
 				SearchMethods: map[string]manifest.SearchMethodInfo{
 					"searchMethod1": {
-						EmbeddingFunction: "searchFunction1",
+						Embedder: "embedder1",
 					},
 					"searchMethod2": {
-						EmbeddingFunction: "searchFunction1",
+						Embedder: "embedder1",
 						Index: manifest.IndexInfo{
 							Type: "hnsw",
 							Options: manifest.OptionsInfo{

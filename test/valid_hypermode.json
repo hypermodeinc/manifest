@@ -51,10 +51,10 @@
     "collection1": {
       "searchMethods": {
         "searchMethod1": {
-          "embeddingFunction": "searchFunction1"
+          "embedder": "embedder1"
         },
         "searchMethod2": {
-          "embeddingFunction": "searchFunction1",
+          "embedder": "embedder1",
           "index": {
             "type": "hnsw",
             "options": {
