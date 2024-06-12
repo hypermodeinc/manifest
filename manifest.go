@@ -31,9 +31,10 @@ const V1AuthHeaderVariableName = "__V1_AUTH_HEADER_VALUE__"
 var schemaContent string
 
 type HypermodeManifest struct {
-	Version int                  `json:"-"`
-	Models  map[string]ModelInfo `json:"models"`
-	Hosts   map[string]HostInfo  `json:"hosts"`
+	Version     int                       `json:"-"`
+	Models      map[string]ModelInfo      `json:"models"`
+	Hosts       map[string]HostInfo       `json:"hosts"`
+	Collections map[string]CollectionInfo `json:"collections"`
 }
 
 func (m *HypermodeManifest) IsCurrentVersion() bool {
@@ -66,6 +67,25 @@ type HostInfo struct {
 	BaseURL         string            `json:"baseURL"`
 	Headers         map[string]string `json:"headers"`
 	QueryParameters map[string]string `json:"queryParameters"`
+}
+
+type CollectionInfo struct {
+	SearchMethods map[string]SearchMethodInfo `json:"searchMethods"`
+}
+
+type SearchMethodInfo struct {
+	Embedder string    `json:"embedder"`
+	Index    IndexInfo `json:"index"`
+}
+
+type IndexInfo struct {
+	Type    string      `json:"type"`
+	Options OptionsInfo `json:"options"`
+}
+
+type OptionsInfo struct {
+	EfConstruction int `json:"efConstruction"`
+	MaxLevels      int `json:"maxLevels"`
 }
 
 func (m ModelInfo) Hash() string {
