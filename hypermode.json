@@ -149,6 +149,7 @@
         },
         "collections": {
           "type": "object",
+          "description": "Collection definitions, for natural language search.",
           "propertyNames": {
             "type": "string",
             "minLength": 1,
@@ -157,9 +158,12 @@
           },
           "additionalProperties": {
             "type": "object",
+            "description": "Collection configuration.",
+            "additionalProperties": false,
             "properties": {
               "searchMethods": {
                 "type": "object",
+                "description": "Search methods for the collection.",
                 "propertyNames": {
                   "type": "string",
                   "minLength": 1,
@@ -168,53 +172,60 @@
                 },
                 "additionalProperties": {
                   "type": "object",
+                  "description": "Search method configuration for the collection.  If an index configuration is not specified, a default sequential index will be created automatically.",
+                  "additionalProperties": false,
                   "properties": {
                     "embeddingFunction": {
                       "type": "string",
                       "minLength": 1,
-                      "description": "Name of the embedding function to call in the collection.",
-                      "markdownDescription": "Name of the embedding function to call in the collection.\n\nReference: https://docs.hypermode.com/define-collections"
+                      "description": "Name of the embedding function to call in the collection."
                     },
                     "index": {
+                      "description": "Index configuration for the collection.",
                       "oneOf": [
                         {
                           "type": "object",
+                          "additionalProperties": false,
                           "properties": {
                             "type": {
                               "type": "string",
                               "enum": ["sequential"],
-                              "description": "Type of the index.",
-                              "markdownDescription": "Type of the index.\n\nReference: https://docs.hypermode.com/define-collections"
-                            },
-                            "options": {
-                              "type": "object"
+                              "default": "sequential",
+                              "description": "Type of the index."
                             }
                           },
                           "required": ["type"]
                         },
                         {
                           "type": "object",
+                          "additionalProperties": false,
                           "properties": {
                             "type": {
                               "type": "string",
                               "enum": ["hnsw"],
-                              "description": "Type of the index.",
-                              "markdownDescription": "Type of the index.\n\nReference: https://docs.hypermode.com/define-collections"
+                              "default": "sequential",
+                              "description": "Type of the index."
                             },
                             "options": {
                               "type": "object",
+                              "description": "Options for the HNSW index.",
+                              "minProperties": 1,
+                              "additionalProperties": false,
                               "properties": {
                                 "efConstruction": {
-                                  "type": "integer"
+                                  "type": "integer",
+                                  "default": 15,
+                                  "description": "The number of candidate vertices to evaluate during construction.\n\nDefault: 15"
                                 },
                                 "maxLevels": {
-                                  "type": "integer"
+                                  "type": "integer",
+                                  "default": 5,
+                                  "description": "The maximum number of levels in the structure.\n\nDefault: 5"
                                 }
-                              },
-                              "required": ["efConstruction", "maxLevels"]
+                              }
                             }
                           },
-                          "required": ["type", "options"]
+                          "required": ["type"]
                         }
                       ]
                     }
