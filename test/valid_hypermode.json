@@ -3,24 +3,29 @@
   "$schema": "https://manifest.hypermode.com/hypermode.json",
   "models": {
     "model-1": {
-      "sourceModel": "source-model-1",
-      "provider": "provider-1",
-      "host": "my-model-host"
+      "sourceModel": "example/source-model-1",
+      "provider": "hugging-face",
+      "host": "hypermode"
     },
     "model-2": {
       "sourceModel": "source-model-2",
-      "provider": "provider-2",
-      "host": "hypermode"
+      "host": "my-model-host",
+      "path": "path/to/model-2"
     },
     "model-3": {
       "sourceModel": "source-model-3",
-      "provider": "provider-3",
-      "host": "hypermode"
+      "host": "my-model-host"
     }
   },
   "hosts": {
     "my-model-host": {
-      "endpoint": "https://models.example.com/full/path/to/model-1",
+      "baseUrl": "https://models.example.com/",
+      "headers": {
+        "X-API-Key": "{{API_KEY}}"
+      }
+    },
+    "another-model-host": {
+      "endpoint": "https://models.example.com/full/path/to/model-3",
       "headers": {
         "X-API-Key": "{{API_KEY}}"
       }

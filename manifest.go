@@ -50,6 +50,7 @@ type ModelInfo struct {
 	SourceModel string `json:"sourceModel"`
 	Provider    string `json:"provider"`
 	Host        string `json:"host"`
+	Path        string `json:"path"`
 }
 
 type HostInfo struct {

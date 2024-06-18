@@ -21,27 +21,33 @@ func TestReadManifest(t *testing.T) {
 		Models: map[string]manifest.ModelInfo{
 			"model-1": {
 				Name:        "model-1",
-				SourceModel: "source-model-1",
-				Provider:    "provider-1",
-				Host:        "my-model-host",
+				SourceModel: "example/source-model-1",
+				Provider:    "hugging-face",
+				Host:        "hypermode",
 			},
 			"model-2": {
 				Name:        "model-2",
 				SourceModel: "source-model-2",
-				Provider:    "provider-2",
-				Host:        "hypermode",
+				Host:        "my-model-host",
+				Path:        "path/to/model-2",
 			},
 			"model-3": {
 				Name:        "model-3",
 				SourceModel: "source-model-3",
-				Provider:    "provider-3",
-				Host:        "hypermode",
+				Host:        "my-model-host",
 			},
 		},
 		Hosts: map[string]manifest.HostInfo{
 			"my-model-host": {
-				Name:     "my-model-host",
-				Endpoint: "https://models.example.com/full/path/to/model-1",
+				Name:    "my-model-host",
+				BaseURL: "https://models.example.com/",
+				Headers: map[string]string{
+					"X-API-Key": "{{API_KEY}}",
+				},
+			},
+			"another-model-host": {
+				Name:     "another-model-host",
+				Endpoint: "https://models.example.com/full/path/to/model-3",
 				Headers: map[string]string{
 					"X-API-Key": "{{API_KEY}}",
 				},
@@ -203,10 +209,11 @@ func TestGetHostVariablesFromManifest(t *testing.T) {
 
 	// This should match the host variables that are present in valid_hypermode.json
 	expectedVars := map[string][]string{
-		"my-model-host":    {"API_KEY"},
-		"my-graphql-api":   {"AUTH_TOKEN"},
-		"my-rest-api":      {"API_TOKEN"},
-		"another-rest-api": {"USERNAME", "PASSWORD"},
+		"my-model-host":      {"API_KEY"},
+		"another-model-host": {"API_KEY"},
+		"my-graphql-api":     {"AUTH_TOKEN"},
+		"my-rest-api":        {"API_TOKEN"},
+		"another-rest-api":   {"USERNAME", "PASSWORD"},
 	}
 
 	m, err := manifest.ReadManifest(validManifest)
