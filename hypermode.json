@@ -23,22 +23,13 @@
           },
           "additionalProperties": {
             "type": "object",
-            "required": [
-              "task",
-              "sourceModel",
-              "provider",
-              "host"
-            ],
+            "required": ["task", "sourceModel", "provider", "host"],
             "additionalProperties": false,
             "properties": {
               "task": {
                 "type": "string",
                 "minLength": 1,
-                "enum": [
-                  "classification",
-                  "embedding",
-                  "generation"
-                ],
+                "enum": ["classification", "embedding", "generation"],
                 "description": "Training intent of model, such as 'classification' or 'embedding'.",
                 "markdownDescription": "Training intent of model, such as 'classification' or 'embedding'.\n\nReference: https://docs.hypermode.com/define-models"
               },
@@ -126,21 +117,14 @@
               {
                 "oneOf": [
                   {
-                    "required": [
-                      "baseUrl"
-                    ]
+                    "required": ["baseUrl"]
                   },
                   {
-                    "required": [
-                      "endpoint"
-                    ]
+                    "required": ["endpoint"]
                   }
                 ],
                 "not": {
-                  "required": [
-                    "baseUrl",
-                    "endpoint"
-                  ]
+                  "required": ["baseUrl", "endpoint"]
                 }
               }
             ],
@@ -253,10 +237,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "name",
-              "endpoint"
-            ],
+            "required": ["name", "endpoint"],
             "additionalProperties": false,
             "properties": {
               "name": {
@@ -287,13 +268,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "name",
-              "task",
-              "sourceModel",
-              "provider",
-              "host"
-            ],
+            "required": ["name", "task", "sourceModel", "provider", "host"],
             "additionalProperties": false,
             "properties": {
               "host": {

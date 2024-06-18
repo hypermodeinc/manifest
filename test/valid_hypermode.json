@@ -29,7 +29,7 @@
       }
     },
     "my-graphql-api": {
-      "endpoint":"https://api.example.com/graphql",
+      "endpoint": "https://api.example.com/graphql",
       "headers": {
         "Authorization": "Bearer {{AUTH_TOKEN}}"
       }

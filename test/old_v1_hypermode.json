@@ -32,7 +32,7 @@
     },
     {
       "name": "my-graphql-api",
-      "endpoint":"https://api.example.com/graphql",
+      "endpoint": "https://api.example.com/graphql",
       "authHeader": "Authorization"
     }
   ]
