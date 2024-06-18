@@ -3,19 +3,16 @@
   "$schema": "https://manifest.hypermode.com/hypermode.json",
   "models": {
     "model-1": {
-      "task": "classification",
       "sourceModel": "source-model-1",
       "provider": "provider-1",
       "host": "my-model-host"
     },
     "model-2": {
-      "task": "embedding",
       "sourceModel": "source-model-2",
       "provider": "provider-2",
       "host": "hypermode"
     },
     "model-3": {
-      "task": "generation",
       "sourceModel": "source-model-3",
       "provider": "provider-3",
       "host": "hypermode"

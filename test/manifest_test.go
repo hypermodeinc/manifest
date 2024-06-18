@@ -21,21 +21,18 @@ func TestReadManifest(t *testing.T) {
 		Models: map[string]manifest.ModelInfo{
 			"model-1": {
 				Name:        "model-1",
-				Task:        manifest.ClassificationTask,
 				SourceModel: "source-model-1",
 				Provider:    "provider-1",
 				Host:        "my-model-host",
 			},
 			"model-2": {
 				Name:        "model-2",
-				Task:        manifest.EmbeddingTask,
 				SourceModel: "source-model-2",
 				Provider:    "provider-2",
 				Host:        "hypermode",
 			},
 			"model-3": {
 				Name:        "model-3",
-				Task:        manifest.GenerationTask,
 				SourceModel: "source-model-3",
 				Provider:    "provider-3",
 				Host:        "hypermode",
@@ -110,21 +107,18 @@ func TestReadV1Manifest(t *testing.T) {
 		Models: map[string]manifest.ModelInfo{
 			"model-1": {
 				Name:        "model-1",
-				Task:        manifest.ClassificationTask,
 				SourceModel: "source-model-1",
 				Provider:    "provider-1",
 				Host:        "my-model-host",
 			},
 			"model-2": {
 				Name:        "model-2",
-				Task:        manifest.EmbeddingTask,
 				SourceModel: "source-model-2",
 				Provider:    "provider-2",
 				Host:        "hypermode",
 			},
 			"model-3": {
 				Name:        "model-3",
-				Task:        manifest.GenerationTask,
 				SourceModel: "source-model-3",
 				Provider:    "provider-3",
 				Host:        "hypermode",
@@ -171,13 +165,12 @@ func TestValidateManifest(t *testing.T) {
 func TestModelInfo_Hash(t *testing.T) {
 	model := manifest.ModelInfo{
 		Name:        "my-model",
-		Task:        manifest.ClassificationTask,
 		SourceModel: "my-source-model",
 		Provider:    "my-provider",
 		Host:        "my-host",
 	}
 
-	expectedHash := "c53ed7d572cb8619c4817eb4a66de580754cc52058004e4b0ae0484e19f3e043"
+	expectedHash := "f0e05986e8fc7c7986337990cfd175adc62a323e287a7802f43e60eea77c93ac"
 
 	actualHash := model.Hash()
 	if actualHash != expectedHash {
