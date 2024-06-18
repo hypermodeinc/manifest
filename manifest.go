@@ -45,20 +45,12 @@ func IsCurrentVersion(version int) bool {
 	return version == currentVersion
 }
 
-type ModelTask string
-
-const (
-	ClassificationTask ModelTask = "classification"
-	EmbeddingTask      ModelTask = "embedding"
-	GenerationTask     ModelTask = "generation"
-)
-
 type ModelInfo struct {
-	Name        string    `json:"-"`
-	Task        ModelTask `json:"task"`
-	SourceModel string    `json:"sourceModel"`
-	Provider    string    `json:"provider"`
-	Host        string    `json:"host"`
+	Name        string `json:"-"`
+	SourceModel string `json:"sourceModel"`
+	Provider    string `json:"provider"`
+	Host        string `json:"host"`
+	Path        string `json:"path"`
 }
 
 type HostInfo struct {
@@ -90,7 +82,7 @@ type OptionsInfo struct {
 
 func (m ModelInfo) Hash() string {
 	// Concatenate the attributes into a single string
-	data := m.Name + "|" + string(m.Task) + "|" + m.SourceModel + "|" + m.Provider + "|" + m.Host
+	data := m.Name + "|" + m.SourceModel + "|" + m.Provider + "|" + m.Host
 
 	// Compute the SHA-256 hash
 	hash := sha256.Sum256([]byte(data))
@@ -174,7 +166,6 @@ func parseManifestJsonV1(data []byte, manifest *HypermodeManifest) error {
 	for _, model := range v1_man.Models {
 		manifest.Models[model.Name] = ModelInfo{
 			Name:        model.Name,
-			Task:        ModelTask(string(model.Task)),
 			SourceModel: model.SourceModel,
 			Provider:    model.Provider,
 			Host:        model.Host,
