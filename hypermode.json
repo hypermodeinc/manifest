@@ -173,7 +173,7 @@
                           "properties": {
                             "type": {
                               "type": "string",
-                              "enum": ["sequential"],
+                              "const": "sequential",
                               "default": "sequential",
                               "description": "Type of the index."
                             }
@@ -186,7 +186,7 @@
                           "properties": {
                             "type": {
                               "type": "string",
-                              "enum": ["hnsw"],
+                              "const": "hnsw",
                               "default": "sequential",
                               "description": "Type of the index."
                             },
