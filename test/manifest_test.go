@@ -83,6 +83,11 @@ func TestReadManifest(t *testing.T) {
 				Type:    manifest.HostTypeHTTP,
 				BaseURL: "https://api.example.com/v2/",
 			},
+			"neon": manifest.PostgresqlHostInfo{
+				Name:    "neon",
+				Type:    "postgresql",
+				ConnStr: "postgresql://{{POSTGRESQL_USERNAME}}:{{POSTGRESQL_PASSWORD}}@1.2.3.4:5432/data?sslmode=disable",
+			},
 		},
 		Collections: map[string]manifest.CollectionInfo{
 			"collection1": {
@@ -222,6 +227,7 @@ func TestGetHostVariablesFromManifest(t *testing.T) {
 		"my-graphql-api":     {"AUTH_TOKEN"},
 		"my-rest-api":        {"API_TOKEN"},
 		"another-rest-api":   {"USERNAME", "PASSWORD"},
+		"neon":               {"POSTGRESQL_USERNAME", "POSTGRESQL_PASSWORD"},
 	}
 
 	m, err := manifest.ReadManifest(validManifest)
