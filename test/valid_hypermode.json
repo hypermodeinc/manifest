@@ -47,6 +47,14 @@
       "headers": {
         "Authorization": "Basic {{base64(USERNAME:PASSWORD)}}"
       }
+    },
+    "api-with-type": {
+      "type": "http",
+      "baseUrl": "https://api.example.com/v2/"
+    },
+    "neon": {
+      "type": "postgresql",
+      "connString": "postgresql://{{POSTGRESQL_USERNAME}}:{{POSTGRESQL_PASSWORD}}@1.2.3.4:5432/data?sslmode=disable"
     }
   },
   "collections": {

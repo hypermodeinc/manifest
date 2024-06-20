@@ -103,68 +103,111 @@
           "additionalProperties": {
             "type": "object",
             "properties": {
-              "baseUrl": {
+              "type": {
                 "type": "string",
-                "format": "uri",
-                "minLength": 1,
-                "pattern": "^https?://\\S+/$",
-                "description": "Base URL for connections to the host.  Must end with a trailing slash.  If providing the entire URL, use the endpoint field instead.",
-                "markdownDescription": "Base URL for connections to the host.  Must end with a trailing slash.  If providing the entire URL, use the `endpoint` field instead.\n\nReference: https://docs.hypermode.com/define-hosts"
-              },
-              "endpoint": {
-                "type": "string",
-                "format": "uri",
-                "minLength": 1,
-                "pattern": "^https?://\\S+$",
-                "description": "Full URL endpoint for connections to the host.  If providing the base URL, use the baseUrl field instead.",
-                "markdownDescription": "Full URL endpoint for connections to the host.  If providing the base URL, use the `baseUrl` field instead.\n\nReference: https://docs.hypermode.com/define-hosts"
-              },
-              "headers": {
-                "type": "object",
-                "propertyNames": {
-                  "type": "string",
-                  "minLength": 1,
-                  "pattern": "^[\\w!#$%&'*+-.^`|~]+$"
-                },
-                "additionalProperties": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "description": "Headers to include in requests to the host.",
-                "markdownDescription": "Headers to include in requests to the host.\n\nReference: https://docs.hypermode.com/define-hosts"
-              },
-              "queryParameters": {
-                "type": "object",
-                "$comment": "Query parameter keys and values will be encoded when used, so there is no need to validate a pattern in the schema.",
-                "propertyNames": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "additionalProperties": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "description": "Query parameters to include in requests to the host.",
-                "markdownDescription": "Query parameters to include in requests to the host.\n\nReference: https://docs.hypermode.com/define-hosts"
+                "default": "http",
+                "enum": ["http", "postgresql"],
+                "description": "Type for the host, such as 'http', 'postgresql'",
+                "markdownDescription": "Type for the host, such as 'http', 'postgresql'.\n\nReference: https://docs.hypermode.com/define-hosts"
               }
             },
-            "$comment": "Either baseUrl or endpoint must be provided, but not both.",
             "allOf": [
               {
-                "oneOf": [
-                  {
-                    "required": ["baseUrl"]
+                "if": {
+                  "properties": { "type": { "const": "http" } }
+                },
+                "then": {
+                  "properties": {
+                    "type": {
+                      "const": "http"
+                    },
+                    "baseUrl": {
+                      "type": "string",
+                      "format": "uri",
+                      "minLength": 1,
+                      "pattern": "^https?://\\S+/$",
+                      "description": "Base URL for connections to the host.  Must end with a trailing slash.  If providing the entire URL, use the endpoint field instead.",
+                      "markdownDescription": "Base URL for connections to the host.  Must end with a trailing slash.  If providing the entire URL, use the `endpoint` field instead.\n\nReference: https://docs.hypermode.com/define-hosts"
+                    },
+                    "endpoint": {
+                      "type": "string",
+                      "format": "uri",
+                      "minLength": 1,
+                      "pattern": "^https?://\\S+$",
+                      "description": "Full URL endpoint for connections to the host.  If providing the base URL, use the baseUrl field instead.",
+                      "markdownDescription": "Full URL endpoint for connections to the host.  If providing the base URL, use the `baseUrl` field instead.\n\nReference: https://docs.hypermode.com/define-hosts"
+                    },
+                    "headers": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": "^[\\w!#$%&'*+-.^`|~]+$"
+                      },
+                      "additionalProperties": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "description": "Headers to include in requests to the host.",
+                      "markdownDescription": "Headers to include in requests to the host.\n\nReference: https://docs.hypermode.com/define-hosts"
+                    },
+                    "queryParameters": {
+                      "type": "object",
+                      "$comment": "Query parameter keys and values will be encoded when used, so there is no need to validate a pattern in the schema.",
+                      "propertyNames": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "additionalProperties": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "description": "Query parameters to include in requests to the host.",
+                      "markdownDescription": "Query parameters to include in requests to the host.\n\nReference: https://docs.hypermode.com/define-hosts"
+                    },
+                    "additionalProperties": false
                   },
-                  {
-                    "required": ["endpoint"]
-                  }
-                ],
-                "not": {
-                  "required": ["baseUrl", "endpoint"]
+                  "$comment": "Either baseUrl or endpoint must be provided, but not both.",
+                  "allOf": [
+                    {
+                      "oneOf": [
+                        {
+                          "required": ["baseUrl"]
+                        },
+                        {
+                          "required": ["endpoint"]
+                        }
+                      ],
+                      "not": {
+                        "required": ["baseUrl", "endpoint"]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "if": {
+                  "properties": { "type": { "const": "postgresql" } },
+                  "required": ["type"]
+                },
+                "then": {
+                  "properties": {
+                    "type": {
+                      "const": "postgresql"
+                    },
+                    "connString": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "^postgresq?l?://([^:]+):([^@]+)@([^:]+):([0-9]+)/([^/]+)$",
+                      "description": "The PostgreSQL connection string in URI format.",
+                      "markdownDescription": "The PostgreSQL connection string in URI format.\n\nReference: https://docs.hypermode.com/define-hosts"
+                    }
+                  },
+                  "required": ["connString"],
+                  "additionalProperties": false
                 }
               }
-            ],
-            "additionalProperties": false
+            ]
           }
         },
         "collections": {
