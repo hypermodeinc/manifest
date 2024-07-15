@@ -4,6 +4,12 @@
 
 package manifest
 
+import (
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
+)
+
 const (
 	HostTypePostgresql string = "postgresql"
 )
@@ -24,4 +30,17 @@ func (PostgresqlHostInfo) HostType() string {
 
 func (h PostgresqlHostInfo) GetVariables() []string {
 	return extractVariables(h.ConnStr)
+}
+
+func (h PostgresqlHostInfo) Hash() string {
+	// Concatenate the attributes into a single string
+	data := fmt.Sprintf("%v|%v|%v", h.Name, h.Type, h.ConnStr)
+
+	// Compute the SHA-256 hash
+	hash := sha256.Sum256([]byte(data))
+
+	// Convert the hash to a hexadecimal string
+	hashStr := hex.EncodeToString(hash[:])
+
+	return hashStr
 }

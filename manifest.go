@@ -27,6 +27,7 @@ type HostInfo interface {
 	HostName() string
 	HostType() string
 	GetVariables() []string
+	Hash() string
 }
 
 type HypermodeManifest struct {

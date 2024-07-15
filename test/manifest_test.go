@@ -198,7 +198,7 @@ func TestModelInfo_Hash(t *testing.T) {
 	}
 }
 
-func TestHostInfo_Hash(t *testing.T) {
+func TestHttpHostInfo_Hash(t *testing.T) {
 	host := manifest.HTTPHostInfo{
 		Name:     "my-host",
 		Endpoint: "https://example.com/api",
@@ -212,6 +212,20 @@ func TestHostInfo_Hash(t *testing.T) {
 	}
 
 	expectedHash := "897ba7738c819211a9291f402bbdda529aadd4f83107ee08157e72bc12e915ec"
+
+	actualHash := host.Hash()
+	if actualHash != expectedHash {
+		t.Errorf("Expected hash: %s, but got: %s", expectedHash, actualHash)
+	}
+}
+
+func TestHPostgresHostInfo_Hash(t *testing.T) {
+	host := manifest.PostgresqlHostInfo{
+		Name:    "my-database",
+		ConnStr: "postgresql://{{USERNAME}}:{{PASSWORD}}@database.example.com:5432/dbname?sslmode=require",
+	}
+
+	expectedHash := "bca6ac337c06274506199ceab0f5ce6145b2abd88504284ad0125b8ea1e1d051"
 
 	actualHash := host.Hash()
 	if actualHash != expectedHash {
