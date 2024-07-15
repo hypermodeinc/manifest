@@ -66,6 +66,7 @@ func (h HTTPHostInfo) GetVariables() []string {
 
 func (h HTTPHostInfo) Hash() string {
 	// Concatenate the attributes into a single string
+	// NOTE: The Type field is not included in the HTTP host hash, for backwards compatibility.  It should be include for other host types.
 	data := fmt.Sprintf("%v|%v|%v|%v|%v", h.Name, h.Endpoint, h.BaseURL, h.Headers, h.QueryParameters)
 
 	// Compute the SHA-256 hash
