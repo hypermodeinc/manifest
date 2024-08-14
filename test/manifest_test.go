@@ -262,6 +262,7 @@ func TestGetHostVariablesFromManifest(t *testing.T) {
 		"my-rest-api":        {"API_TOKEN"},
 		"another-rest-api":   {"USERNAME", "PASSWORD"},
 		"neon":               {"POSTGRESQL_USERNAME", "POSTGRESQL_PASSWORD"},
+		"my-dgraph-cloud":    {"DGRAPH_KEY"},
 	}
 
 	m, err := manifest.ReadManifest(validManifest)
