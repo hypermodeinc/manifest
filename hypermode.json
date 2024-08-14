@@ -219,6 +219,7 @@
                     },
                     "endpoint": {
                       "type": "string",
+                      "format": "uri",
                       "minLength": 1,
                       "pattern": "^https?://\\S+$",
                       "description": "Full URL endpoint for connections to DGraph Cloud.",
