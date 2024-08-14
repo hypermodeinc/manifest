@@ -239,8 +239,8 @@ func TestHPostgresHostInfo_Hash(t *testing.T) {
 	}
 }
 
-func TestDGraphCloudHostInfo_Hash(t *testing.T) {
-	host := manifest.DGraphCloudHostInfo{
+func TestDgraphCloudHostInfo_Hash(t *testing.T) {
+	host := manifest.DgraphCloudHostInfo{
 		Name:     "my-dgraph-cloud",
 		Endpoint: "https://frozen-mango.eu-central-1.aws.cloud.dgraph.io/graphql",
 		Key:      "{{DGRAPH_KEY}}",

@@ -221,15 +221,15 @@
                       "type": "string",
                       "format": "uri",
                       "minLength": 1,
-                      "pattern": "^https?://\\S+$",
-                      "description": "Full URL endpoint for connections to DGraph Cloud.",
-                      "markdownDescription": "Full URL endpoint for connections to DGraph.\n\nReference: https://docs.hypermode.com/define-hosts"
+                      "pattern": "^https://\\S+$",
+                      "description": "Full URL endpoint for connections to Dgraph Cloud.",
+                      "markdownDescription": "Full URL endpoint for connections to Dgraph.\n\nReference: https://docs.hypermode.com/define-hosts"
                     },
                     "key": {
                       "type": "string",
                       "minLength": 1,
-                      "description": "API key for DGraph Cloud.",
-                      "markdownDescription": "API key for DGraph Cloud.\n\nReference: https://docs.hypermode.com/define-hosts"
+                      "description": "API key for Dgraph Cloud.",
+                      "markdownDescription": "API key for Dgraph Cloud.\n\nReference: https://docs.hypermode.com/define-hosts"
                     }
                   },
                   "required": ["endpoint", "key"],
