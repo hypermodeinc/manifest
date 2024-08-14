@@ -88,6 +88,12 @@ func TestReadManifest(t *testing.T) {
 				Type:    "postgresql",
 				ConnStr: "postgresql://{{POSTGRESQL_USERNAME}}:{{POSTGRESQL_PASSWORD}}@1.2.3.4:5432/data?sslmode=disable",
 			},
+			"my-dgraph-cloud": manifest.DGraphCloudHostInfo{
+				Name:     "my-dgraph-cloud",
+				Type:     "dgraph-cloud",
+				Endpoint: "https://frozen-mango.eu-central-1.aws.cloud.dgraph.io/graphql",
+				Key:      "{{DGRAPH_KEY}}",
+			},
 		},
 		Collections: map[string]manifest.CollectionInfo{
 			"collection1": {
