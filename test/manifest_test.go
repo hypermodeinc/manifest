@@ -239,6 +239,20 @@ func TestHPostgresHostInfo_Hash(t *testing.T) {
 	}
 }
 
+func TestDGraphCloudHostInfo_Hash(t *testing.T) {
+	host := manifest.DGraphCloudHostInfo{
+		Name:     "my-dgraph-cloud",
+		Endpoint: "https://frozen-mango.eu-central-1.aws.cloud.dgraph.io/graphql",
+		Key:      "{{DGRAPH_KEY}}",
+	}
+
+	expectedHash := "8039a6ea0219f417341f5e41230f596776d0f0381f0aac59052c96fea3eb70ba"
+	actualHash := host.Hash()
+	if actualHash != expectedHash {
+		t.Errorf("Expected hash: %s, but got: %s", expectedHash, actualHash)
+	}
+}
+
 func TestGetHostVariablesFromManifest(t *testing.T) {
 	// This should match the host variables that are present in valid_hypermode.json
 	expectedVars := map[string][]string{

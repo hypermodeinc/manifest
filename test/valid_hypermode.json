@@ -58,7 +58,7 @@
     },
     "my-dgraph-cloud": {
       "type": "dgraph-cloud",
-      "endpoint:": "https://frozen-mango.eu-central-1.aws.cloud.dgraph.io/graphql",
+      "endpoint": "https://frozen-mango.eu-central-1.aws.cloud.dgraph.io/graphql",
       "key": "{{DGRAPH_KEY}}"
     }
   },
