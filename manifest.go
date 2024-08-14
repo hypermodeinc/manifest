@@ -138,7 +138,7 @@ func parseManifestJson(data []byte, manifest *HypermodeManifest) error {
 			h.Type = HostTypeHTTP
 			manifest.Hosts[name] = h
 		case HostTypePostgresql:
-			var h DGraphCloudHostInfo
+			var h PostgresqlHostInfo
 			if err := json.Unmarshal(rawHost, &h); err != nil {
 				return fmt.Errorf("failed to parse manifest: %w", err)
 			}
