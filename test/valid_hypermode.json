@@ -55,6 +55,11 @@
     "neon": {
       "type": "postgresql",
       "connString": "postgresql://{{POSTGRESQL_USERNAME}}:{{POSTGRESQL_PASSWORD}}@1.2.3.4:5432/data?sslmode=disable"
+    },
+    "my-dgraph-cloud": {
+      "type": "dgraph-cloud",
+      "endpoint": "https://frozen-mango.eu-central-1.aws.cloud.dgraph.io/graphql",
+      "key": "{{DGRAPH_KEY}}"
     }
   },
   "collections": {

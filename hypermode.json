@@ -106,9 +106,9 @@
               "type": {
                 "type": "string",
                 "default": "http",
-                "enum": ["http", "postgresql"],
-                "description": "Type for the host, such as 'http', 'postgresql'",
-                "markdownDescription": "Type for the host, such as 'http', 'postgresql'.\n\nReference: https://docs.hypermode.com/define-hosts"
+                "enum": ["http", "postgresql", "dgraph-cloud"],
+                "description": "Type for the host, such as 'http', 'postgresql', 'dgraph-cloud'",
+                "markdownDescription": "Type for the host, such as 'http', 'postgresql', 'dgraph-cloud'.\n\nReference: https://docs.hypermode.com/define-hosts"
               }
             },
             "allOf": [
@@ -204,6 +204,35 @@
                     }
                   },
                   "required": ["connString"],
+                  "additionalProperties": false
+                }
+              },
+              {
+                "if": {
+                  "properties": { "type": { "const": "dgraph-cloud" } },
+                  "required": ["type"]
+                },
+                "then": {
+                  "properties": {
+                    "type": {
+                      "const": "dgraph-cloud"
+                    },
+                    "endpoint": {
+                      "type": "string",
+                      "format": "uri",
+                      "minLength": 1,
+                      "pattern": "^https://\\S+$",
+                      "description": "Full URL endpoint for connections to Dgraph Cloud.",
+                      "markdownDescription": "Full URL endpoint for connections to Dgraph.\n\nReference: https://docs.hypermode.com/define-hosts"
+                    },
+                    "key": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "API key for Dgraph Cloud.",
+                      "markdownDescription": "API key for Dgraph Cloud.\n\nReference: https://docs.hypermode.com/define-hosts"
+                    }
+                  },
+                  "required": ["endpoint", "key"],
                   "additionalProperties": false
                 }
               }
