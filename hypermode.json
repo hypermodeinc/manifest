@@ -106,9 +106,9 @@
               "type": {
                 "type": "string",
                 "default": "http",
-                "enum": ["http", "postgresql", "dgraph-cloud"],
-                "description": "Type for the host, such as 'http', 'postgresql', 'dgraph-cloud'",
-                "markdownDescription": "Type for the host, such as 'http', 'postgresql', 'dgraph-cloud'.\n\nReference: https://docs.hypermode.com/define-hosts"
+                "enum": ["http", "postgresql", "dgraph"],
+                "description": "Type for the host, such as 'http', 'postgresql', 'dgraph'",
+                "markdownDescription": "Type for the host, such as 'http', 'postgresql', 'dgraph'.\n\nReference: https://docs.hypermode.com/define-hosts"
               }
             },
             "allOf": [
