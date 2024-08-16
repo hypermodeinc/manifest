@@ -144,8 +144,8 @@ func parseManifestJson(data []byte, manifest *HypermodeManifest) error {
 			}
 			h.Name = name
 			manifest.Hosts[name] = h
-		case HostTypeDgraphCloud:
-			var h DgraphCloudHostInfo
+		case HostTypeDgraph:
+			var h DgraphHostInfo
 			if err := json.Unmarshal(rawHost, &h); err != nil {
 				return fmt.Errorf("failed to parse manifest: %w", err)
 			}
