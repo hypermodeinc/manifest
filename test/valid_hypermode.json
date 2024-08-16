@@ -58,12 +58,12 @@
     },
     "my-dgraph-cloud": {
       "type": "dgraph",
-      "endpoint": "https://frozen-mango.eu-central-1.aws.cloud.dgraph.io/graphql",
+      "grpcTarget": "frozen-mango.grpc.eu-central-1.aws.cloud.dgraph.io:443",
       "key": "{{DGRAPH_KEY}}"
     },
     "local-dgraph": {
       "type": "dgraph",
-      "endpoint": "localhost:9080"
+      "grpcTarget": "localhost:9080"
     }
   },
   "collections": {
