@@ -11,29 +11,29 @@ import (
 )
 
 const (
-	HostTypeDgraphCloud string = "dgraph-cloud"
+	HostTypeDgraph string = "dgraph"
 )
 
-type DgraphCloudHostInfo struct {
+type DgraphHostInfo struct {
 	Name     string `json:"-"`
 	Type     string `json:"type"`
 	Endpoint string `json:"endpoint"`
 	Key      string `json:"key"`
 }
 
-func (p DgraphCloudHostInfo) HostName() string {
+func (p DgraphHostInfo) HostName() string {
 	return p.Name
 }
 
-func (DgraphCloudHostInfo) HostType() string {
-	return HostTypeDgraphCloud
+func (DgraphHostInfo) HostType() string {
+	return HostTypeDgraph
 }
 
-func (h DgraphCloudHostInfo) GetVariables() []string {
+func (h DgraphHostInfo) GetVariables() []string {
 	return extractVariables(h.Key)
 }
 
-func (h DgraphCloudHostInfo) Hash() string {
+func (h DgraphHostInfo) Hash() string {
 	// Concatenate the attributes into a single string
 	data := fmt.Sprintf("%v|%v|%v|%v", h.Name, h.Type, h.Endpoint, h.Key)
 

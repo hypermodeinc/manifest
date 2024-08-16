@@ -209,31 +209,57 @@
               },
               {
                 "if": {
-                  "properties": { "type": { "const": "dgraph-cloud" } },
+                  "properties": { "type": { "const": "dgraph" } },
                   "required": ["type"]
                 },
                 "then": {
-                  "properties": {
-                    "type": {
-                      "const": "dgraph-cloud"
-                    },
-                    "endpoint": {
-                      "type": "string",
-                      "format": "uri",
-                      "minLength": 1,
-                      "pattern": "^https://\\S+$",
-                      "description": "Full URL endpoint for connections to Dgraph Cloud.",
-                      "markdownDescription": "Full URL endpoint for connections to Dgraph.\n\nReference: https://docs.hypermode.com/define-hosts"
-                    },
-                    "key": {
-                      "type": "string",
-                      "minLength": 1,
-                      "description": "API key for Dgraph Cloud.",
-                      "markdownDescription": "API key for Dgraph Cloud.\n\nReference: https://docs.hypermode.com/define-hosts"
+                  "if": {
+                    "properties": {
+                      "endpoint": {
+                        "const": "localhost:9080"
+                      }
                     }
                   },
-                  "required": ["endpoint", "key"],
-                  "additionalProperties": false
+                  "then": {
+                    "properties": {
+                      "type": {
+                        "const": "dgraph"
+                      },
+                      "endpoint": {
+                        "type": "string",
+                        "format": "uri",
+                        "minLength": 1,
+                        "pattern": "^localhost:9080$",
+                        "description": "Full URL endpoint for connections to Dgraph Cloud, or localhost:9080 if running locally.",
+                        "markdownDescription": "Full URL endpoint for connections to Dgraph.\n\nReference: https://docs.hypermode.com/define-hosts"
+                      }
+                    },
+                    "required": ["endpoint"],
+                    "additionalProperties": false
+                  },
+                  "else": {
+                    "properties": {
+                      "type": {
+                        "const": "dgraph"
+                      },
+                      "endpoint": {
+                        "type": "string",
+                        "format": "uri",
+                        "minLength": 1,
+                        "pattern": "^https://\\S+$",
+                        "description": "Full URL endpoint for connections to Dgraph Cloud, or localhost:9080 if running locally.",
+                        "markdownDescription": "Full URL endpoint for connections to Dgraph.\n\nReference: https://docs.hypermode.com/define-hosts"
+                      },
+                      "key": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "API key for Dgraph Cloud.",
+                        "markdownDescription": "API key for Dgraph Cloud.\n\nReference: https://docs.hypermode.com/define-hosts"
+                      }
+                    },
+                    "required": ["endpoint", "key"],
+                    "additionalProperties": false
+                  }
                 }
               }
             ]

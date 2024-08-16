@@ -88,11 +88,17 @@ func TestReadManifest(t *testing.T) {
 				Type:    "postgresql",
 				ConnStr: "postgresql://{{POSTGRESQL_USERNAME}}:{{POSTGRESQL_PASSWORD}}@1.2.3.4:5432/data?sslmode=disable",
 			},
-			"my-dgraph-cloud": manifest.DgraphCloudHostInfo{
+			"my-dgraph-cloud": manifest.DgraphHostInfo{
 				Name:     "my-dgraph-cloud",
-				Type:     "dgraph-cloud",
+				Type:     "dgraph",
 				Endpoint: "https://frozen-mango.eu-central-1.aws.cloud.dgraph.io/graphql",
 				Key:      "{{DGRAPH_KEY}}",
+			},
+			"local-dgraph": manifest.DgraphHostInfo{
+				Name:     "local-dgraph",
+				Type:     "dgraph",
+				Endpoint: "localhost:9080",
+				Key:      "",
 			},
 		},
 		Collections: map[string]manifest.CollectionInfo{
@@ -240,13 +246,27 @@ func TestHPostgresHostInfo_Hash(t *testing.T) {
 }
 
 func TestDgraphCloudHostInfo_Hash(t *testing.T) {
-	host := manifest.DgraphCloudHostInfo{
+	host := manifest.DgraphHostInfo{
 		Name:     "my-dgraph-cloud",
 		Endpoint: "https://frozen-mango.eu-central-1.aws.cloud.dgraph.io/graphql",
 		Key:      "{{DGRAPH_KEY}}",
 	}
 
 	expectedHash := "8039a6ea0219f417341f5e41230f596776d0f0381f0aac59052c96fea3eb70ba"
+	actualHash := host.Hash()
+	if actualHash != expectedHash {
+		t.Errorf("Expected hash: %s, but got: %s", expectedHash, actualHash)
+	}
+}
+
+func TestDgraphLocalHostInfo_Hash(t *testing.T) {
+	host := manifest.DgraphHostInfo{
+		Name:     "local-dgraph",
+		Endpoint: "localhost:9080",
+		Key:      "",
+	}
+
+	expectedHash := "ce8adec78afa0376c932c32b94cfe090c2924cd2c9ab6ea6600168d6cbb9b5b8"
 	actualHash := host.Hash()
 	if actualHash != expectedHash {
 		t.Errorf("Expected hash: %s, but got: %s", expectedHash, actualHash)
