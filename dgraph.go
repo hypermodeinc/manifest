@@ -35,7 +35,7 @@ func (h DgraphHostInfo) GetVariables() []string {
 
 func (h DgraphHostInfo) Hash() string {
 	// Concatenate the attributes into a single string
-	data := fmt.Sprintf("%v|%v|%v|%v", h.Name, h.Type, h.GrpcTarget, h.Key)
+	data := fmt.Sprintf("%v|%v|%v", h.Name, h.Type, h.GrpcTarget)
 
 	// Compute the SHA-256 hash
 	hash := sha256.Sum256([]byte(data))

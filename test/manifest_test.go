@@ -252,7 +252,7 @@ func TestDgraphCloudHostInfo_Hash(t *testing.T) {
 		Key:        "{{DGRAPH_KEY}}",
 	}
 
-	expectedHash := "af888d9f4d3c93e44deef4fffcae29fb225939c970655415c6b9c4f63b519768"
+	expectedHash := "542e5cf68cbff1b2839c2494da557d81c0e0c75a8313bedb06e8040dc4973658"
 	actualHash := host.Hash()
 	if actualHash != expectedHash {
 		t.Errorf("Expected hash: %s, but got: %s", expectedHash, actualHash)
@@ -266,7 +266,7 @@ func TestDgraphLocalHostInfo_Hash(t *testing.T) {
 		Key:        "",
 	}
 
-	expectedHash := "ce8adec78afa0376c932c32b94cfe090c2924cd2c9ab6ea6600168d6cbb9b5b8"
+	expectedHash := "9e5fd654b1007e1eb2d32480c17e5f977046fdda53f649df166f68bf6545ebdc"
 	actualHash := host.Hash()
 	if actualHash != expectedHash {
 		t.Errorf("Expected hash: %s, but got: %s", expectedHash, actualHash)
