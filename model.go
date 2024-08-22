@@ -16,7 +16,7 @@ type ModelInfo struct {
 	Provider    string `json:"provider"`
 	Host        string `json:"host"`
 	Path        string `json:"path"`
-	Mode 	 	string `json:"mode"`
+	Mode        string `json:"mode"`
 }
 
 func (m ModelInfo) Hash() string {

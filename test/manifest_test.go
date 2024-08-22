@@ -41,7 +41,7 @@ func TestReadManifest(t *testing.T) {
 				SourceModel: "example/source-model-4",
 				Provider:    "hugging-face",
 				Host:        "hypermode",
-				Mode: 		 "shared",
+				Mode:        "shared",
 			},
 		},
 		Hosts: map[string]manifest.HostInfo{
@@ -207,7 +207,7 @@ func TestModelInfo_Hash(t *testing.T) {
 		SourceModel: "my-source-model",
 		Provider:    "my-provider",
 		Host:        "my-host",
-		Mode: 		 "shared",
+		Mode:        "shared",
 	}
 
 	expectedHash := "549d392d5c6caf22bbb65b1cbb8b0eb8f9c15a7be9058c4980c5df434f62d924"
