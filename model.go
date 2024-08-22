@@ -16,11 +16,12 @@ type ModelInfo struct {
 	Provider    string `json:"provider"`
 	Host        string `json:"host"`
 	Path        string `json:"path"`
+	Mode 	 	string `json:"mode"`
 }
 
 func (m ModelInfo) Hash() string {
 	// Concatenate the attributes into a single string
-	data := fmt.Sprintf("%v|%v|%v|%v", m.Name, m.SourceModel, m.Provider, m.Host)
+	data := fmt.Sprintf("%v|%v|%v|%v|%v", m.Name, m.SourceModel, m.Provider, m.Host, m.Mode)
 
 	// Compute the SHA-256 hash
 	hash := sha256.Sum256([]byte(data))

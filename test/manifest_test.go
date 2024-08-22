@@ -36,6 +36,13 @@ func TestReadManifest(t *testing.T) {
 				SourceModel: "source-model-3",
 				Host:        "my-model-host",
 			},
+			"model-4": {
+				Name:        "model-4",
+				SourceModel: "example/source-model-4",
+				Provider:    "hugging-face",
+				Host:        "hypermode",
+				Mode: 		 "shared",
+			},
 		},
 		Hosts: map[string]manifest.HostInfo{
 			"my-model-host": manifest.HTTPHostInfo{
@@ -200,9 +207,10 @@ func TestModelInfo_Hash(t *testing.T) {
 		SourceModel: "my-source-model",
 		Provider:    "my-provider",
 		Host:        "my-host",
+		Mode: 		 "shared",
 	}
 
-	expectedHash := "f0e05986e8fc7c7986337990cfd175adc62a323e287a7802f43e60eea77c93ac"
+	expectedHash := "549d392d5c6caf22bbb65b1cbb8b0eb8f9c15a7be9058c4980c5df434f62d924"
 
 	actualHash := model.Hash()
 	if actualHash != expectedHash {

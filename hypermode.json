@@ -51,6 +51,11 @@
                     "type": "string",
                     "const": "hypermode",
                     "description": "Host for the model.  Either 'hypermode', or the name of an external host as defined in the 'hosts' section."
+                  },
+                  "mode": {
+                    "type": "string",
+                    "enum": ["shared", "dedicated"],
+                    "description": "Deployment mode for the model. Either 'shared' or 'dedicated'."
                   }
                 }
               },
