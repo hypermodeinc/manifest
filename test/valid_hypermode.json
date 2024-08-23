@@ -15,6 +15,12 @@
     "model-3": {
       "sourceModel": "source-model-3",
       "host": "my-model-host"
+    },
+    "model-4": {
+      "sourceModel": "example/source-model-4",
+      "provider": "hugging-face",
+      "host": "hypermode",
+      "dedicated": true
     }
   },
   "hosts": {
