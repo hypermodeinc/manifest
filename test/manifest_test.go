@@ -41,7 +41,7 @@ func TestReadManifest(t *testing.T) {
 				SourceModel: "example/source-model-4",
 				Provider:    "hugging-face",
 				Host:        "hypermode",
-				Mode:        "shared",
+				Dedicated:   true,
 			},
 		},
 		Hosts: map[string]manifest.HostInfo{
@@ -207,13 +207,47 @@ func TestModelInfo_Hash(t *testing.T) {
 		SourceModel: "my-source-model",
 		Provider:    "my-provider",
 		Host:        "my-host",
-		Mode:        "shared",
 	}
 
-	expectedHash := "549d392d5c6caf22bbb65b1cbb8b0eb8f9c15a7be9058c4980c5df434f62d924"
+	expectedHash := "f0e05986e8fc7c7986337990cfd175adc62a323e287a7802f43e60eea77c93ac"
 
-	actualHash := model.Hash()
-	if actualHash != expectedHash {
+	if actualHash := model.Hash(); actualHash != expectedHash {
+		t.Errorf("Expected hash: %s, but got: %s", expectedHash, actualHash)
+	}
+
+	// Dedicated is not relevant for non-hypermode hosts,
+	// so this should not affect the hash.
+	model.Dedicated = true
+	if actualHash := model.Hash(); actualHash != expectedHash {
+		t.Errorf("Expected hash: %s, but got: %s", expectedHash, actualHash)
+	}
+}
+
+func TestHypermodeModelInfo_Hash(t *testing.T) {
+	model := manifest.ModelInfo{
+		Name:        "my-model",
+		SourceModel: "my-source-model",
+		Provider:    "my-provider",
+		Host:        "hypermode",
+	}
+
+	expectedHash := "010e30710a2fe7b140a0aee1981fa5bfbbb8ab8c4ae2b946a585636e8c5c3152"
+
+	if actualHash := model.Hash(); actualHash != expectedHash {
+		t.Errorf("Expected hash: %s, but got: %s", expectedHash, actualHash)
+	}
+
+	// We don't include the "dedicated" attribute if it is false,
+	// so this should not affect the hash
+	model.Dedicated = false
+	if actualHash := model.Hash(); actualHash != expectedHash {
+		t.Errorf("Expected hash: %s, but got: %s", expectedHash, actualHash)
+	}
+
+	// Whereas if it is true, it should affect the hash
+	model.Dedicated = true
+	expectedHash = "73c776a156bfec3e5b74d815b4d9ab177dac1d00b9721d51447adc0c17fd1fd5"
+	if actualHash := model.Hash(); actualHash != expectedHash {
 		t.Errorf("Expected hash: %s, but got: %s", expectedHash, actualHash)
 	}
 }

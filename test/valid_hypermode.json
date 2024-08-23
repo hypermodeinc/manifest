@@ -20,7 +20,7 @@
       "sourceModel": "example/source-model-4",
       "provider": "hugging-face",
       "host": "hypermode",
-      "mode": "shared"
+      "dedicated": true
     }
   },
   "hosts": {
