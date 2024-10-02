@@ -1,4 +1,4 @@
-module github.com/hypermodeAI/manifest
+module github.com/hypermodeinc/manifest
 
 go 1.22
 
